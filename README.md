@@ -4,77 +4,111 @@
 To develop a neural network regression model for the given dataset.
 
 ## THEORY
-Explain the problem statement
+The class NeuralNet inherits from nn.Module, which is the base class for all neural networks in PyTorch.
 
+In the constructor init, layers and activation functions are defined.
+
+The first layer self.n1=nn.Linear(1,10) takes one input feature and maps it to 10 neurons.
+
+The second layer self.n2=nn.Linear(10,20) processes the 12 outputs and maps them to 20 neurons.
+
+The third layer self.n3=nn.Linear(20,1) reduces the 14 features back to a single output.
+
+The activation function self.relu=nn.ReLU() introduces non-linearity, helping the network learn complex patterns.
+
+A history dictionary is initialized to store the loss values during training for performance tracking.
+
+The forward function defines how input data flows through the network layers.
+
+Input x is first passed through n1 and activated by ReLU, then through n2 with ReLU again.
+
+Finally, the processed data passes through n3 to produce the output, which is returned.
 ## Neural Network Model
-Include the neural network model diagram.
+
+<img width="763" height="556" alt="image" src="https://github.com/user-attachments/assets/82a5deee-a61c-4656-979a-daf6aefe3c28" />
 
 ## DESIGN STEPS
-### STEP 1: 
+### STEP 1:
 
-Create your dataset in a Google sheet with one numeric input and one numeric output.
+Loading the dataset
 
-### STEP 2: 
+### STEP 2:
 
 Split the dataset into training and testing
 
-### STEP 3: 
+### STEP 3:
 
 Create MinMaxScalar objects ,fit the model and transform the data.
 
-### STEP 4: 
+### STEP 4:
 
 Build the Neural Network Model and compile the model.
 
-### STEP 5: 
+### STEP 5:
 
 Train the model with the training data.
 
-### STEP 6: 
+### STEP 6:
 
 Plot the performance plot
 
-### STEP 7: 
+### STEP 7:
 
 Evaluate the model with the testing data.
 
-### STEP 8: 
-
-Use the trained model to predict  for a new input value .
-
 ## PROGRAM
-
-### Name:
-
-### Register Number:
-
+### Name: HARI VARSHAN V
+### Register Number: 212224230092
 ```python
-class NeuralNet(nn.Module):
-    def __init__(self):
+class Neuralnet(nn.Module):
+   def __init__(self):
         super().__init__()
-        #Include your code here
-
-
+        self.n1=nn.Linear(1,10)
+        self.n2=nn.Linear(10,20)
+        self.n3=nn.Linear(20,1)
+        self.relu=nn.ReLU()
+        self.history={'loss': []}
+   def forward(self,x):
+        x=self.relu(self.n1(x))
+        x=self.relu(self.n2(x))
+        x=self.n3(x)
+        return x
 
 # Initialize the Model, Loss Function, and Optimizer
+ai_brain=Neuralnet()
+criteria=nn.MSELoss()
+optimizer=optim.RMSprop(sai_brain.parameters(),lr=0.001)
+
+def train_model(ai_brain,x_train,y_train,criteria,optmizer,epochs=4000):
+    for i in range(epochs):
+        optimizer.zero_grad()
+        loss=criteria(ai_brain(x_train),y_train)
+        loss.backward()
+        optimizer.step()
+        
+        ai_brain.history['loss'].append(loss.item())
+        if i%200==0:
+            print(f"Epoch [{i}/epochs], loss: {loss.item():.6f}")
 
 
-
-def train_model(ai_brain, X_train, y_train, criterion, optimizer, epochs=2000):
-    #Include your code here
 
 ```
+## Dataset Information
+<img width="408" height="809" alt="image" src="https://github.com/user-attachments/assets/cd24e274-64f4-4a21-b3b5-b7c7b704e7b5" />
 
-### Dataset Information
-Include screenshot of the generated data
 
-### OUTPUT
+## OUTPUT
+<img width="790" height="488" alt="Screenshot 2026-02-21 205145" src="https://github.com/user-attachments/assets/e2589078-e57b-4a02-9ec3-604686eecab0" />
+
 
 ### Training Loss Vs Iteration Plot
-Include your plot here
+<<img width="757" height="620" alt="Screenshot 2026-02-21 205238" src="https://github.com/user-attachments/assets/cf31bf13-b14b-49a1-a908-a7dbedb6ee12" />
+
 
 ### New Sample Data Prediction
-Include your sample input and output here
+<img width="901" height="143" alt="Screenshot 2026-02-21 205329" src="https://github.com/user-attachments/assets/6b94b267-64c8-452d-b406-731d2bbe65c7" />
+
 
 ## RESULT
-Thus, a neural network regression model was successfully developed and trained using PyTorch.
+Successfully executed the cod to develop a neural network regression model.
+
